@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>FollowBack — Instagram Follow-Back Checker</title>
+<title>WhoFollowsUBack</title>
 <style>
 :root{color-scheme:dark;--bg:#070b13;--panel:#0d1421;--panel2:#101a2a;--line:#1d2a3e;--muted:#91a3bd;--text:#edf4ff;--blue:#5287ff;--green:#39d6a0;--red:#ff6378;--purple:#aa7bff}
 *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#10203b 0,transparent 42%),var(--bg);color:var(--text);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
@@ -28,20 +28,39 @@ button{border:1px solid #444a50;background:#22262a;border-radius:4px;padding:9px
 .tablewrap{border:0;border-radius:0;overflow:auto}th{background:transparent;color:var(--muted);font-size:12px;font-weight:400}td,th{padding:13px 8px;border-bottom:1px solid #2d3135}td{font-size:14px}.username{font-weight:600}.pill{border-radius:3px;background:transparent!important;padding:2px 0;font-size:12px;font-weight:400}.pill.red{color:var(--red)}.pill.green{color:var(--green)}.pill.blue{color:var(--muted)}
 .pagination{font-size:12px}.pages button{border-radius:3px}.pages button.active{background:#eee;color:#111;border-color:#eee}
 .action{border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;margin:0;padding:13px 0}.action:hover{background:transparent;border-color:#666}.action .actionicon{display:none}.action b{font-size:14px}.action small{font-size:12px}.steps{gap:18px}.step{grid-template-columns:1fr}.num{display:none}.step b{font-size:14px}.step p{font-size:13px}.privacy{border:0;border-left:2px solid #5d806a;border-radius:0;background:transparent;padding:0 0 0 12px}.privacy b{font-size:13px}.privacy p{font-size:12px}.right .panel:last-child{border-top:1px solid var(--line);padding-top:20px}
-#fileInput{font-size:13px!important}.footer{border-top:1px solid var(--line);font-size:12px;padding:18px 0;text-align:left}.toast{border-radius:4px;background:#25292d}
+#fileInput{font-size:13px!important}.footer{border-top:1px solid var(--line);font-size:12px;padding:18px 0;text-align:left}.toast{border-radius:4px;background:#25292d}.legal{margin-top:10px;max-width:760px}.legal summary{cursor:pointer;color:#aeb5bc}.legal p{margin:8px 0 0;line-height:1.6}
 @media(max-width:850px){.layout{grid-template-columns:1fr}.right{display:block}.nav{width:100%;margin:0}.sidebar{align-items:flex-start;flex-wrap:wrap;gap:16px}.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}.stat:nth-child(3){padding-left:0}}
 @media(max-width:560px){.app{padding:0 16px}.topbar{padding-top:28px;align-items:flex-start;gap:12px}.topbar h1{font-size:24px}.stats{grid-template-columns:1fr 1fr}.stat{padding:14px}.stat strong{font-size:22px}.panelhead{align-items:flex-start}.toolbar{width:100%}.search{width:100%;flex:1}.nav button{padding-left:7px;padding-right:7px}.layout{gap:22px}}
+@media(max-width:640px){
+  html{overflow-x:hidden}body{min-width:0;overflow-x:hidden;font-size:16px}
+  .app{width:100%;padding:0 16px}
+  .sidebar{padding:18px 0 12px;gap:12px}
+  .brand{width:100%}.brand strong{font-size:15px}
+  .nav{width:calc(100% + 32px);margin:0 -16px;padding:0 16px 6px;display:flex;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.nav::-webkit-scrollbar{display:none}.nav button{min-height:44px;padding:10px 9px;font-size:13px}.nav button span:first-of-type{white-space:nowrap}
+  .topbar{padding:26px 0 18px;display:block}.topbar h1{font-size:25px}.topbar p{font-size:14px;margin-top:4px}.status{display:block;margin-top:13px;white-space:normal}
+  .notice{padding:16px;margin-bottom:22px}.notice p{font-size:14px}.notice .primary{width:100%;min-height:46px}.filehint{line-height:1.5}
+  .stats{grid-template-columns:1fr 1fr;margin-bottom:28px}.stat{min-width:0;padding:14px 12px}.stat:first-child,.stat:nth-child(3){padding-left:0}.stat strong{font-size:23px}.stat span{font-size:12px;line-height:1.3}
+  .layout{display:block}.right{display:block}.right .panel{margin-bottom:28px}
+  .panelhead{display:block;padding-bottom:13px}.panelhead p{font-size:13px}.toolbar{display:grid;grid-template-columns:1fr;width:100%;margin-top:14px}.search{width:100%;min-height:44px;font-size:16px}
+  .tablewrap{overflow:visible}table{display:block;min-width:0;width:100%}thead{display:none}tbody{display:block}tr{display:block;padding:13px 0;border-bottom:1px solid #2d3135}td{display:block;width:100%;padding:2px 0;border:0;font-size:14px}td.username{padding-bottom:5px;font-size:15px;overflow-wrap:anywhere}td:nth-child(2),td:nth-child(3){display:inline;width:auto;margin-right:14px}.pill{font-size:12px}
+  .pagination{align-items:center;margin-top:16px}.pagination .pages{margin-left:auto}.pages button{min-width:40px;min-height:40px}
+  .action{min-height:58px}.action b{font-size:15px}.action small{font-size:13px}
+  #fileInput{width:100%;font-size:14px!important}#loadFiles{min-height:46px}
+  .footer{padding:18px 0 28px;line-height:1.6}.legal summary{min-height:44px;display:flex;align-items:center}.legal p{font-size:13px}
+  .toast{left:16px;right:16px;bottom:16px;max-width:none}
+}
+@media(max-width:370px){.app{padding:0 12px}.nav{width:calc(100% + 24px);margin-left:-12px;margin-right:-12px;padding-left:12px;padding-right:12px}.stats{grid-template-columns:1fr}.stat,.stat:first-child,.stat:nth-child(3){padding:12px 0;border-right:0;border-bottom:1px solid var(--line)}.stat:last-child{border-bottom:0}.topbar h1{font-size:23px}}
 </style>
 </head>
 <body>
 <div class="app">
 <aside class="sidebar">
-  <div class="brand"><div class="logo">◎</div><div><strong>FollowBack</strong><small>Instagram follow-back checker</small></div></div>
+  <div class="brand"><div class="logo">◎</div><div><strong>WhoFollowsUBack</strong><small>Instagram follow-back checker</small></div></div>
   <nav class="nav" aria-label="Main navigation">
     <button class="active" data-view="dashboard">⌂ <span>Dashboard</span></button>
-    <button data-view="notback">♙ <span>Not Following You Back</span><span class="count" id="navNotBack">—</span></button>
-    <button data-view="notfollowing">♧ <span>You Don't Follow Back</span><span class="count" id="navNotFollowing">—</span></button>
-    <button data-view="mutual">♧ <span>Mutual Followers</span><span class="count" id="navMutual">—</span></button>
+    <button data-view="notback">♙ <span>Not Following You Back</span><span class="count" id="navNotBack"></span></button>
+    <button data-view="notfollowing">♧ <span>You Don't Follow Back</span><span class="count" id="navNotFollowing"></span></button>
+    <button data-view="mutual">♧ <span>Mutual Followers</span><span class="count" id="navMutual"></span></button>
     <button data-view="followers">♧ <span>All Followers</span></button>
     <button data-view="following">♧ <span>All Following</span></button>
   </nav>
@@ -57,10 +76,10 @@ button{border:1px solid #444a50;background:#22262a;border-radius:4px;padding:9px
       <div class="filehint">Recommended: JSON format · All-time range · Followers and Following</div>
     </section>
     <section class="stats">
-      <div class="stat"><div class="icon">♧</div><strong id="followingCount">—</strong><span>Following</span></div>
-      <div class="stat green"><div class="icon">♙</div><strong id="followersCount">—</strong><span>Followers</span></div>
-      <div class="stat red"><div class="icon">↗</div><strong id="notBackCount">—</strong><span>Don't follow back</span></div>
-      <div class="stat purple"><div class="icon">⇄</div><strong id="mutualCount">—</strong><span>Mutual followers</span></div>
+      <div class="stat"><div class="icon">♧</div><strong id="followingCount"></strong><span>Following</span></div>
+      <div class="stat green"><div class="icon">♙</div><strong id="followersCount"></strong><span>Followers</span></div>
+      <div class="stat red"><div class="icon">↗</div><strong id="notBackCount"></strong><span>Don't follow back</span></div>
+      <div class="stat purple"><div class="icon">⇄</div><strong id="mutualCount"></strong><span>Mutual followers</span></div>
     </section>
     <div class="layout">
       <section class="left">
@@ -92,7 +111,10 @@ button{border:1px solid #444a50;background:#22262a;border-radius:4px;padding:9px
         </div>
       </aside>
     </div>
-    <div class="footer">FollowBack is an independent personal tool and is not affiliated with Instagram or Meta.</div>
+    <div class="footer">
+      <div>© 2026 Seyinlash. WhoFollowsUBack is not affiliated with Instagram or Meta.</div>
+      <details class="legal"><summary>Privacy</summary><p>WFUB does not collect, upload, sell, or share the Instagram files you choose. Your files are read in your browser and disappear from the app when you refresh or close the page. WFUB does not use analytics or advertising cookies. If this page is hosted on GitHub Pages, GitHub may log visitor IP addresses for security under its own privacy policy.</p></details>
+    </div>
   </div>
 </main>
 </div>
@@ -103,7 +125,7 @@ button{border:1px solid #444a50;background:#22262a;border-radius:4px;padding:9px
   const state = {followers: [], following: [], notBack: [], notFollowing: [], mutual: [], view: 'dashboard', current: [], page: 1, pageSize: 10, loaded: false};
   const titles = {
     dashboard: ['Dashboard', 'A clear overview of your Instagram follow relationships.', "Who Doesn't Follow You Back", "Accounts you follow that aren't in your followers list."],
-    notback: ['Not Following You Back', 'People you follow who do not appear in your followers list.', "Who Doesn't Follow You Back", "These accounts follow you? No — they are missing from your followers list."],
+    notback: ['Not Following You Back', 'People you follow who do not appear in your followers list.', "Who Doesn't Follow You Back", "These accounts are missing from your followers list."],
     notfollowing: ["You Don't Follow Back", 'People who follow you that you are not following.', "You Don't Follow Back", "Accounts in your followers list that aren't in your following list."],
     mutual: ['Mutual Followers', 'Accounts where both lists contain the same username.', 'Mutual Followers', 'Accounts you follow who also follow you back.'],
     followers: ['All Followers', 'Every account in your imported followers list.', 'All Followers', 'Accounts included in your Instagram followers export.'],
@@ -167,7 +189,7 @@ button{border:1px solid #444a50;background:#22262a;border-radius:4px;padding:9px
         const followingFiles = got.filter(kind => kind === 'following').length;
         const fileSummary = [followerFiles && `${followerFiles} follower file${followerFiles === 1 ? '' : 's'}`, followingFiles && `${followingFiles} following file${followingFiles === 1 ? '' : 's'}`].filter(Boolean).join(' and ');
         $('fileStatus').textContent = `Added ${fileSummary}: ${state.followers.length.toLocaleString()} followers, ${state.following.length.toLocaleString()} following. Export counts are a snapshot and may differ from Instagram today.`;
-        toast('Imported successfully — lists compared locally.');
+        toast('Imported successfully. Lists compared locally.');
       }
       updateCounts(); render();
     } catch (e) { toast('Import error: ' + e.message); }
@@ -180,13 +202,13 @@ button{border:1px solid #444a50;background:#22262a;border-radius:4px;padding:9px
     state.mutual = state.following.filter(x => followers.has(normalize(x.username)));
   }
   function updateCounts() {
-    $('followingCount').textContent = state.loaded ? state.following.length.toLocaleString() : '—';
-    $('followersCount').textContent = state.loaded ? state.followers.length.toLocaleString() : '—';
-    $('notBackCount').textContent = state.loaded ? state.notBack.length.toLocaleString() : '—';
-    $('mutualCount').textContent = state.loaded ? state.mutual.length.toLocaleString() : '—';
-    $('navNotBack').textContent = state.loaded ? state.notBack.length.toLocaleString() : '—';
-    $('navNotFollowing').textContent = state.loaded ? state.notFollowing.length.toLocaleString() : '—';
-    $('navMutual').textContent = state.loaded ? state.mutual.length.toLocaleString() : '—';
+    $('followingCount').textContent = state.loaded ? state.following.length.toLocaleString() : '';
+    $('followersCount').textContent = state.loaded ? state.followers.length.toLocaleString() : '';
+    $('notBackCount').textContent = state.loaded ? state.notBack.length.toLocaleString() : '';
+    $('mutualCount').textContent = state.loaded ? state.mutual.length.toLocaleString() : '';
+    $('navNotBack').textContent = state.loaded ? state.notBack.length.toLocaleString() : '';
+    $('navNotFollowing').textContent = state.loaded ? state.notFollowing.length.toLocaleString() : '';
+    $('navMutual').textContent = state.loaded ? state.mutual.length.toLocaleString() : '';
   }
   function viewList() {
     if (state.view === 'notback' || state.view === 'dashboard') return state.notBack;
@@ -216,7 +238,7 @@ button{border:1px solid #444a50;background:#22262a;border-radius:4px;padding:9px
       return;
     }
     const label = state.view === 'notback' || state.view === 'dashboard' ? '<span class="pill red">Not mutual</span>' : state.view === 'mutual' ? '<span class="pill green">Mutual</span>' : '';
-    $('tableArea').innerHTML = `<div class="tablewrap"><table><thead><tr><th>Username</th><th>Profile link</th><th>Status</th></tr></thead><tbody>${shown.map(x => `<tr><td class="username">@${esc(x.username)}</td><td>${x.href ? `<a href="${esc(x.href)}" target="_blank" rel="noopener noreferrer" style="color:#8db2ff">Open profile ↗</a>` : '<span class="muted">—</span>'}</td><td>${label || '<span class="pill blue">Imported</span>'}</td></tr>`).join('')}</tbody></table></div><div class="pagination"><span>Showing ${list.length ? (state.page-1)*state.pageSize+1 : 0}–${Math.min(state.page*state.pageSize,list.length)} of ${list.length.toLocaleString()}</span><div class="pages"><button ${state.page===1?'disabled':''} id="prevPage">‹</button><button class="active">${state.page}</button><button ${state.page>=totalPages?'disabled':''} id="nextPage">›</button></div></div>`;
+    $('tableArea').innerHTML = `<div class="tablewrap"><table><thead><tr><th>Username</th><th>Profile link</th><th>Status</th></tr></thead><tbody>${shown.map(x => `<tr><td class="username">@${esc(x.username)}</td><td>${x.href ? `<a href="${esc(x.href)}" target="_blank" rel="noopener noreferrer" style="color:#8db2ff">Open profile ↗</a>` : '<span class="muted">No link</span>'}</td><td>${label || '<span class="pill blue">Imported</span>'}</td></tr>`).join('')}</tbody></table></div><div class="pagination"><span>Showing ${list.length ? (state.page-1)*state.pageSize+1 : 0} to ${Math.min(state.page*state.pageSize,list.length)} of ${list.length.toLocaleString()}</span><div class="pages"><button ${state.page===1?'disabled':''} id="prevPage">‹</button><button class="active">${state.page}</button><button ${state.page>=totalPages?'disabled':''} id="nextPage">›</button></div></div>`;
     $('prevPage')?.addEventListener('click', () => {state.page--; render();});
     $('nextPage')?.addEventListener('click', () => {state.page++; render();});
   }
