@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FollowBack — Instagram Follow-Back Checker</title>
+<style>
+:root{color-scheme:dark;--bg:#070b13;--panel:#0d1421;--panel2:#101a2a;--line:#1d2a3e;--muted:#91a3bd;--text:#edf4ff;--blue:#5287ff;--green:#39d6a0;--red:#ff6378;--purple:#aa7bff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#10203b 0,transparent 42%),var(--bg);color:var(--text);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);background:#111d30;color:var(--text);border-radius:10px;padding:10px 13px;transition:.15s}button:hover{border-color:#4668a0;background:#172640}button.primary{background:var(--blue);border-color:var(--blue);color:white;font-weight:650}button.ghost{background:transparent}button:disabled{opacity:.4;cursor:not-allowed}
+.app{display:grid;grid-template-columns:235px minmax(0,1fr);min-height:100vh}.sidebar{border-right:1px solid var(--line);background:rgba(8,14,24,.88);padding:22px 14px;display:flex;flex-direction:column;gap:24px}.brand{display:flex;align-items:center;gap:11px;padding:0 8px}.logo{width:39px;height:39px;border-radius:13px;background:linear-gradient(135deg,#ff9a48,#e1306c 52%,#7847ee);display:grid;place-items:center;font-size:21px;font-weight:800;box-shadow:0 7px 22px #b52b6530}.brand strong{display:block;font-size:17px;letter-spacing:-.4px}.brand small{display:block;color:var(--muted);font-size:11px}.nav{display:grid;gap:5px}.nav button{display:flex;align-items:center;gap:12px;text-align:left;border-color:transparent;background:transparent;color:#aebdd2;padding:12px}.nav button.active{background:#162746;color:#78a3ff;border-color:#22395f}.nav .count{margin-left:auto;border-radius:7px;background:#20375e;color:#c5d8ff;padding:2px 7px;font-size:11px}.sidebottom{margin-top:auto;padding:13px 10px;color:var(--muted);font-size:12px}.privacy-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:7px}
+main{min-width:0}.topbar{height:80px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;gap:15px}.topbar h1{font-size:22px;margin:0 0 3px;letter-spacing:-.6px}.topbar p{margin:0;color:var(--muted);font-size:12px}.status{font-size:11px;color:#b3c5dc;white-space:nowrap}.content{padding:24px 28px 35px;max-width:1600px;margin:auto}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:20px}.stat{border:1px solid var(--line);border-radius:15px;padding:17px;background:linear-gradient(145deg,#101a2a,#0b111c);min-width:0}.stat .icon{display:grid;place-items:center;width:34px;height:34px;border-radius:11px;background:#1a2b4a;color:#7ca6ff;font-size:18px;margin-bottom:12px}.stat.green .icon{background:#10362e;color:var(--green)}.stat.red .icon{background:#3a1e2a;color:var(--red)}.stat.purple .icon{background:#2c2047;color:var(--purple)}.stat strong{display:block;font-size:28px;line-height:1.15;letter-spacing:-1px}.stat span{display:block;color:#b5c6dc;margin-top:5px;font-size:12px}.layout{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(270px,.9fr);gap:18px}.panel{border:1px solid var(--line);background:rgba(13,20,33,.92);border-radius:15px;padding:18px;min-width:0;margin-bottom:17px}.panelhead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}.panelhead h2{margin:0;font-size:15px}.panelhead p{margin:4px 0 0;color:var(--muted);font-size:12px}.muted{color:var(--muted)}.toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.search{width:min(220px,100%);background:#0a111d;border:1px solid var(--line);color:var(--text);border-radius:9px;padding:10px 11px;outline:none}.search:focus{border-color:#5488ff}.tablewrap{overflow:auto;border:1px solid #1a273a;border-radius:10px}table{border-collapse:collapse;width:100%;min-width:430px;text-align:left}th{font-size:11px;font-weight:550;color:#9caec8;background:#0a111d}td,th{padding:11px 12px;border-bottom:1px solid #192538}td{font-size:12px;color:#dce7f7}tr:last-child td{border-bottom:0}.username{font-weight:650;color:#f0f5ff}.pill{display:inline-block;border-radius:99px;padding:4px 8px;font-size:10px;font-weight:650}.pill.red{background:#3c1c29;color:#ff8394}.pill.green{background:#10382f;color:#54e1b1}.pill.blue{background:#192d4e;color:#8bb2ff}.empty{padding:30px 12px;text-align:center;color:var(--muted);font-size:12px}.empty strong{display:block;color:var(--text);font-size:14px;margin-bottom:5px}.right .panel{padding:17px}.action{display:flex;align-items:center;gap:11px;width:100%;text-align:left;margin-top:8px;background:#0c1523}.action .actionicon{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--line);border-radius:10px;font-size:16px}.action b{display:block;font-size:12px}.action small{display:block;color:var(--muted);font-size:11px;margin-top:2px}.steps{display:grid;gap:14px}.step{display:grid;grid-template-columns:27px 1fr;gap:10px}.num{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#1b3158;color:#8db2ff;font-weight:750}.step b{font-size:12px}.step p{font-size:11px;color:var(--muted);margin:3px 0 0}.privacy{border:1px solid #155342;background:#0a211f;border-radius:10px;padding:12px;margin-top:15px}.privacy b{color:var(--green);font-size:12px}.privacy p{font-size:11px;color:#a8c9c2;margin:4px 0 0}.notice{border:1px dashed #344866;border-radius:12px;padding:20px;text-align:center;margin-bottom:18px;background:#0b1320}.notice h2{font-size:16px;margin:0 0 6px}.notice p{color:var(--muted);font-size:12px;max-width:580px;margin:0 auto 14px}.filehint{font-size:11px;color:var(--muted);margin-top:9px}.hidden{display:none!important}.section-title{font-size:16px;margin:0 0 4px}.section-sub{font-size:12px;color:var(--muted);margin:0 0 18px}.pagination{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px;color:var(--muted);font-size:11px}.pagination .pages{display:flex;gap:4px}.pages button{padding:5px 9px;font-size:11px}.pages button.active{background:#2b58b8;border-color:#4579e8}.toast{position:fixed;right:20px;bottom:20px;background:#142238;border:1px solid #30486c;border-radius:12px;padding:12px 16px;box-shadow:0 12px 40px #0008;max-width:340px;z-index:5}.footer{font-size:11px;color:#7487a2;text-align:center;padding:10px}
+@media(max-width:1050px){.layout{grid-template-columns:1fr}.right{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.right .panel{margin-bottom:0}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.app{grid-template-columns:1fr}.sidebar{padding:12px;border-right:0;border-bottom:1px solid var(--line);gap:12px}.brand{padding:0 4px}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;padding:9px}.sidebottom{display:none}.topbar{height:auto;padding:17px;align-items:flex-start}.content{padding:16px}.stats{gap:8px}.stat{padding:13px}.stat strong{font-size:23px}.layout{gap:10px}.right{display:block}.right .panel{margin-bottom:12px}.panel{padding:13px}.panelhead{flex-direction:column}.toolbar{width:100%}.search{flex:1;width:100%}}
+
+/* Plain utility layout */
+:root{--bg:#151719;--panel:#151719;--panel2:#1d2023;--line:#34383c;--muted:#a3a9b0;--text:#f2f3f4;--blue:#f2f3f4;--green:#8fd6ae;--red:#ef9a9a;--purple:#c7b9e9}
+body{background:var(--bg);font:16px/1.5 Arial,Helvetica,sans-serif}
+.app{display:block;min-height:100vh;max-width:1120px;margin:0 auto;padding:0 24px}
+.sidebar{position:static;border:0;border-bottom:1px solid var(--line);background:transparent;padding:24px 0 18px;display:flex;align-items:center;gap:32px}
+.brand{padding:0;min-width:max-content}.logo{width:26px;height:26px;border:1px solid #d9dde1;border-radius:50%;background:transparent;box-shadow:none;font-size:0}.logo::after{content:'f';font-size:15px;font-weight:700}.brand strong{font-size:16px;letter-spacing:0}.brand small,.sidebottom{display:none}
+.nav{display:flex;gap:4px;margin-left:auto;overflow:auto}.nav button{min-width:max-content;padding:7px 10px;border:0;border-radius:4px;color:var(--muted);font-size:13px}.nav button.active{background:#262a2e;color:var(--text);border:0}.nav .count{background:transparent;color:inherit;padding:0;margin-left:5px}
+.topbar{height:auto;border:0;padding:42px 0 24px;align-items:flex-end}.topbar h1{font-size:28px;letter-spacing:-.5px}.topbar p{font-size:14px}.status{font-size:13px}.privacy-dot{width:6px;height:6px}
+.content{padding:0 0 48px;max-width:none}.notice{border:1px solid var(--line);border-radius:4px;background:#1b1e21;text-align:left;padding:18px;margin-bottom:26px}.notice h2{font-size:16px}.notice p{margin:4px 0 14px;max-width:680px}.filehint{font-size:12px}
+button{border:1px solid #444a50;background:#22262a;border-radius:4px;padding:9px 12px}button:hover{border-color:#777e85;background:#292d31}button.primary{background:#f0f2f3;border-color:#f0f2f3;color:#111;font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:0 0 34px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.stat{border:0;border-right:1px solid var(--line);border-radius:0;padding:18px 22px;background:transparent}.stat:first-child{padding-left:0}.stat:last-child{border-right:0}.stat .icon{display:none}.stat strong{font-size:26px;letter-spacing:-.5px}.stat span{font-size:13px;margin-top:1px}
+.layout{grid-template-columns:minmax(0,1fr) 285px;gap:42px}.panel,.right .panel{border:0;border-radius:0;background:transparent;padding:0;margin-bottom:34px}.panelhead{padding-bottom:12px;margin-bottom:0;border-bottom:1px solid var(--line);align-items:flex-end}.panelhead h2{font-size:17px}.panelhead p{font-size:13px}.toolbar{justify-content:flex-end}.search{background:#1b1e21;border:1px solid var(--line);border-radius:4px;padding:8px 10px;font-size:13px}
+.tablewrap{border:0;border-radius:0;overflow:auto}th{background:transparent;color:var(--muted);font-size:12px;font-weight:400}td,th{padding:13px 8px;border-bottom:1px solid #2d3135}td{font-size:14px}.username{font-weight:600}.pill{border-radius:3px;background:transparent!important;padding:2px 0;font-size:12px;font-weight:400}.pill.red{color:var(--red)}.pill.green{color:var(--green)}.pill.blue{color:var(--muted)}
+.pagination{font-size:12px}.pages button{border-radius:3px}.pages button.active{background:#eee;color:#111;border-color:#eee}
+.action{border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;margin:0;padding:13px 0}.action:hover{background:transparent;border-color:#666}.action .actionicon{display:none}.action b{font-size:14px}.action small{font-size:12px}.steps{gap:18px}.step{grid-template-columns:1fr}.num{display:none}.step b{font-size:14px}.step p{font-size:13px}.privacy{border:0;border-left:2px solid #5d806a;border-radius:0;background:transparent;padding:0 0 0 12px}.privacy b{font-size:13px}.privacy p{font-size:12px}.right .panel:last-child{border-top:1px solid var(--line);padding-top:20px}
+#fileInput{font-size:13px!important}.footer{border-top:1px solid var(--line);font-size:12px;padding:18px 0;text-align:left}.toast{border-radius:4px;background:#25292d}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.right{display:block}.nav{width:100%;margin:0}.sidebar{align-items:flex-start;flex-wrap:wrap;gap:16px}.stats{grid-template-columns:repeat(2,1fr)}.stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}.stat:nth-child(3){padding-left:0}}
+@media(max-width:560px){.app{padding:0 16px}.topbar{padding-top:28px;align-items:flex-start;gap:12px}.topbar h1{font-size:24px}.stats{grid-template-columns:1fr 1fr}.stat{padding:14px}.stat strong{font-size:22px}.panelhead{align-items:flex-start}.toolbar{width:100%}.search{width:100%;flex:1}.nav button{padding-left:7px;padding-right:7px}.layout{gap:22px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="logo">◎</div><div><strong>FollowBack</strong><small>Instagram follow-back checker</small></div></div>
+  <nav class="nav" aria-label="Main navigation">
+    <button class="active" data-view="dashboard">⌂ <span>Dashboard</span></button>
+    <button data-view="notback">♙ <span>Not Following You Back</span><span class="count" id="navNotBack">—</span></button>
+    <button data-view="notfollowing">♧ <span>You Don't Follow Back</span><span class="count" id="navNotFollowing">—</span></button>
+    <button data-view="mutual">♧ <span>Mutual Followers</span><span class="count" id="navMutual">—</span></button>
+    <button data-view="followers">♧ <span>All Followers</span></button>
+    <button data-view="following">♧ <span>All Following</span></button>
+  </nav>
+  <div class="sidebottom">◈ &nbsp; Your data stays on this device.<br><br><span class="muted">No passwords. No tracking. No third-party access.</span></div>
+</aside>
+<main>
+  <header class="topbar"><div><h1 id="pageTitle">Dashboard</h1><p id="pageDesc">A clear overview of your Instagram follow relationships.</p></div><div class="status"><span class="privacy-dot"></span><span id="statusText">Waiting for data import</span></div></header>
+  <div class="content">
+    <section class="notice" id="importNotice">
+      <h2>Start with your Instagram data export</h2>
+      <p>Choose <strong>all</strong> follower files (<code>followers_1.json</code>, <code>followers_2.json</code>, and so on) plus <code>following.json</code>. Everything is compared in this tab.</p>
+      <button class="primary" id="openImport">＋ Import Instagram JSON</button>
+      <div class="filehint">Recommended: JSON format · All-time range · Followers and Following</div>
+    </section>
+    <section class="stats">
+      <div class="stat"><div class="icon">♧</div><strong id="followingCount">—</strong><span>Following</span></div>
+      <div class="stat green"><div class="icon">♙</div><strong id="followersCount">—</strong><span>Followers</span></div>
+      <div class="stat red"><div class="icon">↗</div><strong id="notBackCount">—</strong><span>Don't follow back</span></div>
+      <div class="stat purple"><div class="icon">⇄</div><strong id="mutualCount">—</strong><span>Mutual followers</span></div>
+    </section>
+    <div class="layout">
+      <section class="left">
+        <div class="panel" id="mainPanel">
+          <div class="panelhead"><div><h2 id="tableTitle">Who Doesn't Follow You Back</h2><p id="tableSubtitle">Accounts you follow that aren't in your followers list.</p></div><div class="toolbar"><input class="search" id="search" type="search" placeholder="Search usernames…" aria-label="Search usernames"><select id="sort" class="search" aria-label="Sort results"><option value="az">Username A → Z</option><option value="za">Username Z → A</option></select></div></div>
+          <div id="tableArea"><div class="empty"><strong>No data loaded yet</strong>Import your Instagram followers and following JSON files to see your results.</div></div>
+        </div>
+      </section>
+      <aside class="right">
+        <div class="panel">
+          <div class="panelhead"><div><h2>Quick actions</h2><p>Manage your local results.</p></div></div>
+          <button class="action" id="actionImport"><span class="actionicon">⇧</span><span><b>Import Instagram data</b><small>Choose followers and following JSON</small></span></button>
+          <button class="action" id="exportBtn"><span class="actionicon">↓</span><span><b>Export current list</b><small>Save the visible results as CSV</small></span></button>
+          <button class="action" id="clearBtn"><span class="actionicon">⌫</span><span><b>Clear data</b><small>Remove the imported lists from memory</small></span></button>
+        </div>
+        <div class="panel">
+          <div class="panelhead"><div><h2>How it works</h2><p>Three steps, no account login.</p></div></div>
+          <div class="steps">
+            <div class="step"><div class="num">1</div><div><b>Request your Instagram export</b><p>In Instagram, open Accounts Center → Your information and permissions → Export your information. Choose JSON and include Followers and Following.</p></div></div>
+            <div class="step"><div class="num">2</div><div><b>Choose the JSON files</b><p>Find <code>followers_1.json</code> and <code>following.json</code> in the downloaded export folder. File names can vary.</p></div></div>
+            <div class="step"><div class="num">3</div><div><b>Compare the lists</b><p>FollowBack finds non-mutuals, mutuals, and accounts you don't follow back.</p></div></div>
+          </div>
+          <div class="privacy"><b>✓ 100% local processing</b><p>Your files are not sent to a server. No Instagram password, cookies, or third-party connection is needed. Refreshing this page clears the imported data.</p></div>
+        </div>
+        <div class="panel"><div class="panelhead"><div><h2>Import files</h2><p>Select every follower file and your following file.</p></div></div>
+          <label class="muted" for="fileInput">Instagram JSON files</label><input id="fileInput" type="file" accept=".json,application/json" multiple style="display:block;width:100%;margin-top:10px;color:var(--muted);font-size:11px">
+          <div class="filehint" id="fileStatus">No files selected.</div>
+          <button class="primary" id="loadFiles" style="width:100%;margin-top:12px">Load selected files</button>
+        </div>
+      </aside>
+    </div>
+    <div class="footer">FollowBack is an independent personal tool and is not affiliated with Instagram or Meta.</div>
+  </div>
+</main>
+</div>
+<div id="toast" class="toast hidden" role="status"></div>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const state = {followers: [], following: [], notBack: [], notFollowing: [], mutual: [], view: 'dashboard', current: [], page: 1, pageSize: 10, loaded: false};
+  const titles = {
+    dashboard: ['Dashboard', 'A clear overview of your Instagram follow relationships.', "Who Doesn't Follow You Back", "Accounts you follow that aren't in your followers list."],
+    notback: ['Not Following You Back', 'People you follow who do not appear in your followers list.', "Who Doesn't Follow You Back", "These accounts follow you? No — they are missing from your followers list."],
+    notfollowing: ["You Don't Follow Back", 'People who follow you that you are not following.', "You Don't Follow Back", "Accounts in your followers list that aren't in your following list."],
+    mutual: ['Mutual Followers', 'Accounts where both lists contain the same username.', 'Mutual Followers', 'Accounts you follow who also follow you back.'],
+    followers: ['All Followers', 'Every account in your imported followers list.', 'All Followers', 'Accounts included in your Instagram followers export.'],
+    following: ['All Following', 'Every account in your imported following list.', 'All Following', 'Accounts included in your Instagram following export.']
+  };
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  function toast(msg) { $('toast').textContent = msg; $('toast').classList.remove('hidden'); clearTimeout(toast.timer); toast.timer = setTimeout(() => $('toast').classList.add('hidden'), 3500); }
+  function normalize(s) { return String(s || '').trim().replace(/^@/, '').toLocaleLowerCase(); }
+  function unique(list) { const seen = new Set(); return list.filter(x => {const k = normalize(x.username); if (!k || seen.has(k)) return false; seen.add(k); return true;}); }
+  function parseInstagram(json, kind) {
+    let entries = [];
+    if (Array.isArray(json)) entries = json;
+    else if (json && kind === 'following' && Array.isArray(json.relationships_following)) entries = json.relationships_following;
+    else if (json && kind === 'followers') {
+      const key = Object.keys(json).find(k => /^relationships_followers/.test(k) && Array.isArray(json[k]));
+      if (key) entries = json[key];
+    }
+    if (!entries.length && !Array.isArray(json)) throw new Error('Could not find a recognizable ' + kind + ' list in this JSON file.');
+    return unique(entries.map(entry => {
+      const data = entry?.string_list_data;
+      const username = data?.find(x => x?.value)?.value || entry?.title || entry?.username || entry?.name || '';
+      const href = data?.find(x => x?.href)?.href || '';
+      const timestamp = data?.find(x => x?.timestamp)?.timestamp || 0;
+      return {username: String(username).replace(/^@/, '').trim(), href, timestamp};
+    }).filter(x => x.username));
+  }
+  function classifyFile(name, json) {
+    const n = name.toLowerCase();
+    if (n.includes('following') || (json && Array.isArray(json.relationships_following))) return 'following';
+    if (n.includes('follower') || (json && Object.keys(json).some(k => /^relationships_followers/.test(k)))) return 'followers';
+    return null;
+  }
+  async function importFiles(files) {
+    if (!files.length) { toast('Choose at least one JSON file first.'); return; }
+    let got = [];
+    const batch = {followers: [], following: []};
+    try {
+      for (const file of files) {
+        if (!file.name.toLowerCase().endsWith('.json') && file.type !== 'application/json') continue;
+        const json = JSON.parse(await file.text());
+        const kind = classifyFile(file.name, json);
+        if (!kind) { toast('Could not identify "' + file.name + '". Use your followers and following JSON files.'); continue; }
+        const parsed = parseInstagram(json, kind);
+        batch[kind].push(...parsed);
+        got.push(kind);
+      }
+      if (!got.length) return;
+      for (const kind of ['followers', 'following']) {
+        if (batch[kind].length) state[kind] = unique([...state[kind], ...batch[kind]]);
+      }
+      if (!state.followers.length || !state.following.length) {
+        $('fileStatus').textContent = 'Loaded: ' + (state.followers.length ? 'followers' : 'not yet followers') + ' · ' + (state.following.length ? 'following' : 'not yet following') + '. You can select the other file now.';
+        toast('File loaded. Add the other list to compare both.');
+      }
+      state.loaded = state.followers.length > 0 && state.following.length > 0;
+      if (state.loaded) {
+        compare();
+        $('importNotice').classList.add('hidden');
+        $('statusText').textContent = 'Data loaded locally';
+        const followerFiles = got.filter(kind => kind === 'followers').length;
+        const followingFiles = got.filter(kind => kind === 'following').length;
+        const fileSummary = [followerFiles && `${followerFiles} follower file${followerFiles === 1 ? '' : 's'}`, followingFiles && `${followingFiles} following file${followingFiles === 1 ? '' : 's'}`].filter(Boolean).join(' and ');
+        $('fileStatus').textContent = `Added ${fileSummary}: ${state.followers.length.toLocaleString()} followers, ${state.following.length.toLocaleString()} following. Export counts are a snapshot and may differ from Instagram today.`;
+        toast('Imported successfully — lists compared locally.');
+      }
+      updateCounts(); render();
+    } catch (e) { toast('Import error: ' + e.message); }
+  }
+  function compare() {
+    const followers = new Set(state.followers.map(x => normalize(x.username)));
+    const following = new Set(state.following.map(x => normalize(x.username)));
+    state.notBack = state.following.filter(x => !followers.has(normalize(x.username)));
+    state.notFollowing = state.followers.filter(x => !following.has(normalize(x.username)));
+    state.mutual = state.following.filter(x => followers.has(normalize(x.username)));
+  }
+  function updateCounts() {
+    $('followingCount').textContent = state.loaded ? state.following.length.toLocaleString() : '—';
+    $('followersCount').textContent = state.loaded ? state.followers.length.toLocaleString() : '—';
+    $('notBackCount').textContent = state.loaded ? state.notBack.length.toLocaleString() : '—';
+    $('mutualCount').textContent = state.loaded ? state.mutual.length.toLocaleString() : '—';
+    $('navNotBack').textContent = state.loaded ? state.notBack.length.toLocaleString() : '—';
+    $('navNotFollowing').textContent = state.loaded ? state.notFollowing.length.toLocaleString() : '—';
+    $('navMutual').textContent = state.loaded ? state.mutual.length.toLocaleString() : '—';
+  }
+  function viewList() {
+    if (state.view === 'notback' || state.view === 'dashboard') return state.notBack;
+    if (state.view === 'notfollowing') return state.notFollowing;
+    if (state.view === 'mutual') return state.mutual;
+    if (state.view === 'followers') return state.followers;
+    return state.following;
+  }
+  function render() {
+    const t = titles[state.view] || titles.dashboard;
+    $('pageTitle').textContent = t[0]; $('pageDesc').textContent = t[1];
+    $('tableTitle').textContent = t[2]; $('tableSubtitle').textContent = t[3];
+    document.querySelectorAll('.nav button').forEach(b => b.classList.toggle('active', b.dataset.view === state.view));
+    const q = normalize($('search').value);
+    let list = viewList().filter(x => normalize(x.username).includes(q));
+    list = [...list].sort((a,b) => normalize(a.username).localeCompare(normalize(b.username)) * ($('sort').value === 'za' ? -1 : 1));
+    state.current = list;
+    const totalPages = Math.max(1, Math.ceil(list.length / state.pageSize));
+    state.page = Math.min(state.page, totalPages);
+    const shown = list.slice((state.page - 1) * state.pageSize, state.page * state.pageSize);
+    if (!state.loaded) {
+      $('tableArea').innerHTML = '<div class="empty"><strong>No data loaded yet</strong>Import your Instagram followers and following JSON files to see your results.</div>';
+      return;
+    }
+    if (!shown.length) {
+      $('tableArea').innerHTML = '<div class="empty"><strong>No accounts found</strong>' + (q ? 'Try a different search.' : 'This list is empty for the data you imported.') + '</div>';
+      return;
+    }
+    const label = state.view === 'notback' || state.view === 'dashboard' ? '<span class="pill red">Not mutual</span>' : state.view === 'mutual' ? '<span class="pill green">Mutual</span>' : '';
+    $('tableArea').innerHTML = `<div class="tablewrap"><table><thead><tr><th>Username</th><th>Profile link</th><th>Status</th></tr></thead><tbody>${shown.map(x => `<tr><td class="username">@${esc(x.username)}</td><td>${x.href ? `<a href="${esc(x.href)}" target="_blank" rel="noopener noreferrer" style="color:#8db2ff">Open profile ↗</a>` : '<span class="muted">—</span>'}</td><td>${label || '<span class="pill blue">Imported</span>'}</td></tr>`).join('')}</tbody></table></div><div class="pagination"><span>Showing ${list.length ? (state.page-1)*state.pageSize+1 : 0}–${Math.min(state.page*state.pageSize,list.length)} of ${list.length.toLocaleString()}</span><div class="pages"><button ${state.page===1?'disabled':''} id="prevPage">‹</button><button class="active">${state.page}</button><button ${state.page>=totalPages?'disabled':''} id="nextPage">›</button></div></div>`;
+    $('prevPage')?.addEventListener('click', () => {state.page--; render();});
+    $('nextPage')?.addEventListener('click', () => {state.page++; render();});
+  }
+  function exportCSV() {
+    if (!state.loaded) { toast('Import both lists before exporting.'); return; }
+    const rows = [['username','profile_url','list']];
+    const label = state.view === 'notback' || state.view === 'dashboard' ? 'does_not_follow_back' : state.view;
+    state.current.forEach(x => rows.push([x.username, x.href, label]));
+    const csv = rows.map(row => row.map(v => '"' + String(v ?? '').replace(/"/g,'""') + '"').join(',')).join('\r\n');
+    const url = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8;'}));
+    const a = document.createElement('a'); a.href = url; a.download = 'followback-' + label + '.csv'; a.click(); URL.revokeObjectURL(url);
+    toast('CSV exported to your device.');
+  }
+  function clearData() {
+    state.followers=[]; state.following=[]; state.notBack=[]; state.notFollowing=[]; state.mutual=[]; state.loaded=false; state.page=1; state.view='dashboard';
+    $('search').value=''; $('fileInput').value=''; $('fileStatus').textContent='No files selected.'; $('importNotice').classList.remove('hidden'); $('statusText').textContent='Waiting for data import';
+    updateCounts(); render(); toast('Imported data cleared from memory.');
+  }
+  $('openImport').addEventListener('click', () => $('fileInput').click());
+  $('actionImport').addEventListener('click', () => $('fileInput').click());
+  $('fileInput').addEventListener('change', () => { $('fileStatus').textContent = $('fileInput').files.length ? [...$('fileInput').files].map(f=>f.name).join(', ') : 'No files selected.'; });
+  $('loadFiles').addEventListener('click', () => importFiles([...$('fileInput').files]));
+  $('exportBtn').addEventListener('click', exportCSV);
+  $('clearBtn').addEventListener('click', () => { if (!state.loaded || confirm('Clear the imported follower and following lists from this page?')) clearData(); });
+  $('search').addEventListener('input', () => {state.page=1; render();});
+  $('sort').addEventListener('change', () => {state.page=1; render();});
+  document.querySelectorAll('.nav button').forEach(b => b.addEventListener('click', () => {state.view=b.dataset.view;state.page=1;render();}));
+  updateCounts(); render();
+})();
+</script>
+</body>
+</html>
