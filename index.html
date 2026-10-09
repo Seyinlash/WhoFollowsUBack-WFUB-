@@ -3,6 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#151719">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="WFUB">
+<meta name="description" content="Check who follows you back using your Instagram data export. Your files stay on your device.">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
 <title>WhoFollowsUBack</title>
 <style>
 :root{color-scheme:dark;--bg:#070b13;--panel:#0d1421;--panel2:#101a2a;--line:#1d2a3e;--muted:#91a3bd;--text:#edf4ff;--blue:#5287ff;--green:#39d6a0;--red:#ff6378;--purple:#aa7bff}
@@ -268,6 +275,11 @@ button{border:1px solid #444a50;background:#22262a;border-radius:4px;padding:9px
   document.querySelectorAll('.nav button').forEach(b => b.addEventListener('click', () => {state.view=b.dataset.view;state.page=1;render();}));
   updateCounts(); render();
 })();
+</script>
+<script>
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js').catch(() => {}));
+}
 </script>
 </body>
 </html>
